@@ -1,4 +1,8 @@
 # myHealth
+
+## Autor
+[José Alex Alves Pereira](https://alexalves.herokuapp.com)
+
 ## Projeto da disciplina de Desenvolvimento Web II
 
 O myHealth é uma API REST desenvolvida em RUST que permitirá a comunicação entre outras aplicações frontend ou backend. Utilizarei um app mobile desenvolvido em React Native para consumir os endpoints da api, mas pode ficar a vontade para realizar chamadas para essa api de outras maneiras, como uma interface web ou uma aplicação de criar chamadas HTTP como o Postman ou Insomnia.
@@ -13,4 +17,9 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 - [ ] Listar grades de horários de um profissional
 - [ ] Editar uma grade de horários de um profissional
 - [ ] Remover grades de horários de um profissional
-- [ ] Remover uma grade de horários
+- [ ] Remover uma grade de horários de um profissional
+- [ ] Criar agendamentos de um paciente para um profissional
+- [ ] Remover agendamentos de um paciente/profissional
+
+## Licença
+[MIT](https://choosealicense.com/licenses/mit/)
