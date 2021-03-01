@@ -6,11 +6,11 @@ O myHealth é uma API REST desenvolvida em RUST que permitirá a comunicação e
 ### Sobre o myHealth
 Este é um software para a área da saúde, que permite pacientes marcarem consultas com apenas alguns cliques, deixando no passado o trabalhosa forma de marcação, que é prencialmente ou realizando uma ligação telefonica. Pelo app será possível realizar as seguintes operações:
 
-- [] Criar usuário paciente ou profissional
-- [] Autenticar usuário
-- [] Listar usuários do tipo profissional
-- [] Criar grades de horários de um profissional
-- [] Listar grades de horários de um profissional
-- [] Editar uma grade de horários de um profissional
-- [] Remover grades de horários de um profissional
-- [] Remover uma grade de horários
+- [ ] Criar usuário paciente ou profissional
+- [ ] Autenticar usuário
+- [ ] Listar usuários do tipo profissional
+- [ ] Criar grades de horários de um profissional
+- [ ] Listar grades de horários de um profissional
+- [ ] Editar uma grade de horários de um profissional
+- [ ] Remover grades de horários de um profissional
+- [ ] Remover uma grade de horários
