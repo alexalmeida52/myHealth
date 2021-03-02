@@ -1,15 +1,20 @@
 
 use actix_web::{web, App, HttpServer};
 use actix_web::dev::Server;
-use crate::controllers::{user, users};
+use crate::controllers::{usuario, users};
+use sqlx::PgPool;
+use std::net::TcpListener;
 
-pub fn run() -> Result<Server, std::io::Error> {
-    let server = HttpServer::new(|| {
-            App::new()
-                .route("/user", web::post().to(user))
-                .route("/users", web::get().to(users))
+pub fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Error> {
+    let db_pool = web::Data::new(db_pool);
+
+    let server = HttpServer::new(move || {
+        App::new()
+            .route("/usuario", web::post().to(usuario))
+            .route("/users", web::post().to(users))
+            .app_data(db_pool.clone())
     })
-    .bind("127.0.0.1:3000")?
+    .listen(listener)?
     .run();
     Ok(server)
-}
+} 
