@@ -10,12 +10,20 @@ pub struct Usuario {
     senha: String,
     tipo: String
 }
-
+fn print_dados(usuario: &web::Form<Usuario>) {
+    println!("{}", "{");
+    println!("\tnome: {}", usuario.nome);
+    println!("\temail: {}", usuario.email);
+    println!("\tsenha: {}", usuario.senha);
+    println!("\ttipo: {}", usuario.tipo);
+    println!("{}", "}");
+}
 pub async fn usuario(
     usuario: web::Form<Usuario>,
     pool: web::Data<PgPool>
 ) -> Result<HttpResponse, HttpResponse> {
     println!("Tentando inserir");
+    print_dados(&usuario);
     sqlx::query!(
         r#"
         INSERT INTO usuario (id, nome, email, senha, tipo, criado_em)
