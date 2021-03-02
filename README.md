@@ -21,5 +21,20 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 - [ ] Criar agendamentos de um paciente para um profissional
 - [ ] Remover agendamentos de um paciente/profissional
 
+### Estórias de usuário
+- Sendo um paciente, eu desejo:
+  - Visualizar uma lista de profissionais.
+  - Visualizar detalhes de um profissional.
+  - Marcar consultas para um profissional.
+  - Cancelar uma consulta.
+- Sendo um profissional, eu desejo:
+  - Receber marcações de consultas.
+  - Cancelar marcações de consultas.
+  - Criar marcações de consultas para um paciente.
+  - Criar grades de horários.
+  - Editar grades de horários.
+  - Remover grades de horários.
+  - Remover uma grade de horários.
+
 ## Licença
 [MIT](https://choosealicense.com/licenses/mit/)
