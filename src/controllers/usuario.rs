@@ -10,7 +10,7 @@ pub struct Usuario {
     senha: String,
     tipo: String
 }
-fn print_dados(usuario: &web::Form<Usuario>) {
+fn print_dados(usuario: &web::Json<Usuario>) {
     println!("{}", "{");
     println!("\tnome: {}", usuario.nome);
     println!("\temail: {}", usuario.email);
@@ -19,7 +19,7 @@ fn print_dados(usuario: &web::Form<Usuario>) {
     println!("{}", "}");
 }
 pub async fn usuario(
-    usuario: web::Form<Usuario>,
+    usuario: web::Json<Usuario>,
     pool: web::Data<PgPool>
 ) -> Result<HttpResponse, HttpResponse> {
     println!("Tentando inserir");
