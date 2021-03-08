@@ -1,5 +1,5 @@
 mod usuario;
-mod users;
+mod usuarios;
 
 pub use usuario::*;
-pub use users::*;
+pub use usuarios::*;

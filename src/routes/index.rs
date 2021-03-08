@@ -1,7 +1,7 @@
 
 use actix_web::{web, App, HttpServer};
 use actix_web::dev::Server;
-use crate::controllers::{usuario, users};
+use crate::controllers::{usuario, usuarios};
 use sqlx::PgPool;
 use std::net::TcpListener;
 
@@ -11,7 +11,7 @@ pub fn run(listener: TcpListener, db_pool: PgPool) -> Result<Server, std::io::Er
     let server = HttpServer::new(move || {
         App::new()
             .route("/usuario", web::post().to(usuario))
-            .route("/users", web::post().to(users))
+            .route("/usuarios", web::get().to(usuarios))
             .app_data(db_pool.clone())
     })
     .listen(listener)?
