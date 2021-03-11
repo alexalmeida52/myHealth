@@ -10,13 +10,13 @@
       <a href="#sobre">Sobre</a>
     </li>
     <li>
-      <a href="#estorias">Estórias de usuário</a>
+      <a href="#Estórias de usuário">Estórias de usuário</a>
     </li>
     <li>
       <a href="#endpoints">Endpoints</a>
     </li>
     <li>
-      <a href="#licenca">Licença</a>
+      <a href="#licença">Licença</a>
     </li>
   </ol>
 </details>
