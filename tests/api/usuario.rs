@@ -18,6 +18,15 @@ async fn usuario_returns_a_200() {
         .send()
         .await
         .expect("Failed to execute request.");
-    println!("{}", response.status().as_u16());
+        
     assert_eq!(200, response.status().as_u16());
+
+    let data = sqlx::query!("SELECT email, nome, tipo FROM usuario",)
+        .fetch_one(&app.db_pool)
+        .await
+        .expect("Failed to fetch saved usuario.");
+
+    assert_eq!(data.nome, "Josefa Barbosa");
+    assert_eq!(data.tipo, "paciente");
+    assert_eq!(data.email, "josefabarbosa@gmail.com");
 }
