@@ -28,14 +28,14 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 
 ### EndPoints
 
- [ POST ] /usuario -> Criar usuário paciente ou profissional
  [ POST ] /auth -> Autenticar usuário
- [ POST ] /horarios -> Criar grades de horários de um profissional
+ [ POST ] /usuario -> Criar usuário paciente ou profissional
  [ GET ] /usuarios -> Listar usuários do tipo profissional
- [ GET] /horarios -> Listar grades de horários de um profissional
+ [ POST ] /horarios/grade -> Criar grade de horários de um profissional
  [ PUT ] /horarios/grade/:id -> Editar uma grade de horários de um profissional
- [ DELETE ] /horarios -> Remover grades de horários de um profissional
  [ DELETE ] /horarios/grade/:id -> Remover uma grade de horários de um profissional
+ [ GET] /horarios/grades -> Listar grades de horários de um profissional
+ [ DELETE ] /horarios/grades -> Remover todas as grades de horários de um profissional
  [ POST ] /agendamento -> Criar agendamentos de um paciente para um profissional
  [ DELETE ] /agendamentos/:id -> Remover agendamentos de um paciente/profissional
 
