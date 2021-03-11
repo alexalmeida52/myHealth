@@ -3,12 +3,34 @@
 ## Autor
 [José Alex Alves Pereira](https://alexalves.herokuapp.com)
 
-## Projeto da disciplina de Desenvolvimento Web II
+<details open="open">
+  <summary>Sumário</summary>
+  <ol>
+    <li>
+      <a href="#apresentação">Apresentação</a>
+    </li>
+    <li>
+      <a href="#sobre-o-myHealth">Sobre</a>
+    </li>
+    <li>
+      <a href="#estórias-de-usuário">Estórias de usuário</a>
+    </li>
+    <li>
+      <a href="#endpoints">Endpoints</a>
+    </li>
+    <li>
+      <a href="#licença">Licença</a>
+    </li>
+  </ol>
+</details>
+
+## Apresentação
+### Projeto da disciplina de Desenvolvimento Web II
 
 O myHealth é uma API REST desenvolvida em RUST que permitirá a comunicação entre outras aplicações frontend ou backend. Utilizarei um app mobile desenvolvido em React Native para consumir os endpoints da api, mas pode ficar a vontade para realizar chamadas para essa api de outras maneiras, como uma interface web ou uma aplicação de criar chamadas HTTP como o Postman ou Insomnia.
 
 ### Sobre o myHealth
-Este é um software para a área da saúde, que permite pacientes marcarem consultas com apenas alguns cliques, deixando no passado o trabalhosa forma de marcação, que é prencialmente ou realizando uma ligação telefonica. Pelo app será possível realizar as seguintes operações:
+Este é um software para a área da saúde, que permite pacientes marcarem consultas com apenas alguns cliques, deixando no passado o trabalhosa forma de marcação, que é prencialmente ou realizando uma ligação telefonica.
 
 ### Estórias de usuário
 - Sendo um paciente, eu desejo:
@@ -25,23 +47,22 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
   - Remover grades de horários.
   - Remover uma grade de horários.
 
-
 ### EndPoints
 #### ``Usuário``
-  - [x] [ POST ] /usuario -> Criar usuário paciente ou profissional
-  - [ ] [ POST ] /auth -> Autenticar usuário
+  - [ ] [ POST ] ``/auth`` -> Autenticar usuário
+  - [x] [ POST ] ``/usuario`` -> Criar usuário paciente ou profissional
+  - [ ] [ GET ] ``/usuarios`` -> Listar usuários do tipo profissional
   
 #### ``Horários``
-  - [ ] [ POST ] /horarios -> Criar grades de horários de um profissional
-  - [ ] [ GET ] /usuarios -> Listar usuários do tipo profissional
-  - [ ] [ GET] /horarios -> Listar grades de horários de um profissional
-  - [ ] [ PUT ] /horarios/grade/:id -> Editar uma grade de horários de um profissional
-  - [ ] [ DELETE ] /horarios -> Remover grades de horários de um profissional
-  - [ ] [ DELETE ] /horarios/grade/:id -> Remover uma grade de horários de um profissional
+  - [ ] [ POST ] ``/horarios/grade`` -> Criar grade de horários de um profissional
+  - [ ] [ GET] ``/horarios/grades`` -> Listar grades de horários de um profissional
+  - [ ] [ PUT ] ``/horarios/grade/:id`` -> Editar uma grade de horários de um profissional
+  - [ ] [ DELETE ] ``/horarios/grades`` -> Remover grades de horários de um profissional
+  - [ ] [ DELETE ] ``/horarios/grade/:id`` -> Remover uma grade de horários de um profissional
 
 #### ``Agendamentos``
-  - [ ] [ POST ] /agendamento -> Criar agendamentos de um paciente para um profissional
-  - [ ] [ DELETE ] /agendamentos/:id -> Remover agendamentos de um paciente/profissional
+  - [ ] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
+  - [ ] [ DELETE ] ``/agendamentos/:id`` -> Remover agendamentos de um paciente/profissional
 
 ### Licença
 [MIT](https://choosealicense.com/licenses/mit/)
