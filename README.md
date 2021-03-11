@@ -1,5 +1,8 @@
 # myHealth
 
+## Autor
+[José Alex Alves Pereira](https://alexalves.herokuapp.com)
+
 <details open="open">
   <summary>Sumário</summary>
   <ol>
@@ -7,10 +10,10 @@
       <a href="#apresentacao">Apresentação</a>
     </li>
     <li>
-      <a href="#sobre">Sobre</a>
+      <a href="#sobre-o-myHealth">Sobre</a>
     </li>
     <li>
-      <a href="#Estórias de usuário">Estórias de usuário</a>
+      <a href="#estórias-de-usuário">Estórias de usuário</a>
     </li>
     <li>
       <a href="#endpoints">Endpoints</a>
@@ -21,10 +24,8 @@
   </ol>
 </details>
 
-## Autor
-[José Alex Alves Pereira](https://alexalves.herokuapp.com)
-
-## Projeto da disciplina de Desenvolvimento Web II
+## Apresentação
+### Projeto da disciplina de Desenvolvimento Web II
 
 O myHealth é uma API REST desenvolvida em RUST que permitirá a comunicação entre outras aplicações frontend ou backend. Utilizarei um app mobile desenvolvido em React Native para consumir os endpoints da api, mas pode ficar a vontade para realizar chamadas para essa api de outras maneiras, como uma interface web ou uma aplicação de criar chamadas HTTP como o Postman ou Insomnia.
 
