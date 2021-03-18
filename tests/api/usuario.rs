@@ -1,14 +1,15 @@
 use crate::helpers::create_app;
 use std::collections::HashMap;
-use myhealth::controllers::{UsuarioDB, UsuarioId};
+use myhealth::controllers::{UsuarioDB};
+use uuid::Uuid;
 
 #[actix_rt::test]
 async fn create_user_returns_a_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     let mut map = HashMap::new();
-    map.insert("nome", "Josefa Barbosa");
-    map.insert("email", "josefabarbosa@gmail.com");
+    map.insert("nome", "Alex Alves");
+    map.insert("email", "alexalves@gmail.com");
     map.insert("senha", "12345");
     map.insert("tipo", "paciente");
     
@@ -27,9 +28,67 @@ async fn create_user_returns_a_200() {
         .await
         .expect("Failed to fetch saved usuario.");
 
-    assert_eq!(data.nome, "Josefa Barbosa");
+    assert_eq!(data.nome, "José Alex");
     assert_eq!(data.tipo, "paciente");
-    assert_eq!(data.email, "josefabarbosa@gmail.com");
+    assert_eq!(data.email, "jhosealex@gmail.com");
+}
+
+#[actix_rt::test]
+async fn update_user_returns_a_200() {
+    let app = create_app().await;
+    let client = reqwest::Client::new();
+    
+    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26d";
+    let mut user_update = HashMap::new();
+    user_update.insert("nome", "Alex Alves");
+    user_update.insert("email", "jhosealex@gmail.com");
+    user_update.insert("tipo", "profissional");
+
+    let response = client
+        .put(&format!("{}/usuarios/{}", &app.address, id))
+        .header("Content-Type", "application/json")
+        .json(&user_update)
+        .send()
+        .await
+        .expect("Failed to execute request.");
+
+    assert_eq!(200, response.status().as_u16());
+
+    let user_uuid: Uuid = Uuid::parse_str(&id).unwrap();
+
+    let data = sqlx::query!("SELECT email, nome, tipo FROM usuario WHERE id = $1", user_uuid)
+        .fetch_one(&app.db_pool)
+        .await
+        .expect("Failed to fetch saved usuario.");
+
+    assert_eq!(data.nome, "Alex Alves");
+    assert_eq!(data.tipo, "profissional");
+    assert_eq!(data.email, "jhosealex@gmail.com");
+}
+
+#[actix_rt::test]
+async fn delete_user_returns_a_200() {
+    let app = create_app().await;
+    let client = reqwest::Client::new();
+
+    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26d";
+
+    let response_delete_user = client
+        .delete(&format!("{}/usuarios/{}", &app.address, id))
+        .header("Content-Type", "application/json")
+        .send()
+        .await
+        .expect("Failed to execute request.");
+    
+    let response_show_user = client
+        .get(&format!("{}/usuarios/{}", &app.address, id))
+        .header("Content-Type", "application/json")
+        .send()
+        .await
+        .expect("Failed to execute request.");
+    
+    assert_eq!(200, response_delete_user.status().as_u16());
+    assert_eq!(404, response_show_user.status().as_u16());
 }
 
 #[actix_rt::test]
@@ -37,30 +96,16 @@ async fn show_user_returns_a_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     
-    let mut map = HashMap::new();
-        map.insert("nome", "José Alex");
-        map.insert("email", "jhosealex@gmail.com");
-        map.insert("senha", "12345");
-        map.insert("tipo", "paciente");
-
-    let response_1 = client
-        .post(&format!("{}/usuarios", &app.address))
-        .header("Content-Type", "application/json")
-        .json(&map)
-        .send()
-        .await
-        .expect("Failed to execute request.");
+    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26d";   
     
-    let usuario_response_1: UsuarioId = response_1.json().await.unwrap();
-    
-    let response_2 = client
-        .get(&format!("{}/usuarios/{}", &app.address, usuario_response_1.id))
+    let response = client
+        .get(&format!("{}/usuarios/{}", &app.address, id))
         .header("Content-Type", "application/json")
         .send()
         .await
         .expect("Failed to execute request.");
     
-    let usuario_response_2: UsuarioDB = response_2.json().await.unwrap();
+    let usuario_response_2: UsuarioDB = response.json().await.unwrap();
     
     assert_eq!(usuario_response_2.email, "jhosealex@gmail.com");
     assert_eq!(usuario_response_2.nome, "José Alex");

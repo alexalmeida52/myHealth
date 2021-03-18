@@ -34,9 +34,9 @@ pub struct UsuarioId {
     pub id: String,
 }
 
-#[derive(Serialize)]
-struct Error {
-    message: String,
+#[derive(Serialize, Deserialize)]
+pub struct Error {
+    pub message: String,
 }
 
 /**
@@ -191,12 +191,12 @@ pub async fn show_user(
         .fetch_one(pool.get_ref())
         .await
         .map_err(|e| {
-            eprintln!("Failed to execute query: {}", e);
+            eprintln!("Falhou to execute query: {}", e);
             let erro = Error {
                 message: e.to_string(),
             };
     
-            HttpResponse::BadRequest().json(&erro)
+            HttpResponse::NotFound().json(&erro)
         })?;
 
     let response = UsuarioDB {
