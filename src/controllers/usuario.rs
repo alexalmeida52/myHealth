@@ -22,16 +22,16 @@ pub struct UsuarioUpdate {
 
 #[derive(Serialize, Deserialize)]
 pub struct UsuarioDB {
-    nome: String,
-    email: String,
-    tipo: String,
-    id: String,
-    criado_em: String,
+    pub nome: String,
+    pub email: String,
+    pub tipo: String,
+    pub id: String,
+    pub criado_em: String,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct UsuarioId {
-    id: String,
+    pub id: String,
 }
 
 #[derive(Serialize)]
