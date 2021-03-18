@@ -3,7 +3,7 @@ use crate::configuration::{DatabaseSettings, Settings};
 use actix_web::{web, App, HttpServer};
 use actix_web::dev::Server;
 use actix_web::web::Data;
-use crate::controllers::{usuario, usuarios};
+use crate::controllers::*;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::PgPool;
 use std::net::TcpListener;
@@ -53,8 +53,13 @@ fn run(
 
     let server = HttpServer::new(move || {
         App::new()
-            .route("/usuario", web::post().to(usuario))
-            .route("/usuarios", web::get().to(usuarios))
+            // ROTAS DE USUÁRIOS
+            .route("/usuarios", web::post().to(usuario))
+            .route("/usuarios/{id}", web::put().to(put_user))
+            .route("/usuarios/{id}", web::delete().to(delete_user))
+            .route("/usuarios/{id}", web::get().to(show_user))
+            .route("/usuarios", web::get().to(index_user))
+
             .app_data(db_pool.clone())
     })
     .listen(listener)?
