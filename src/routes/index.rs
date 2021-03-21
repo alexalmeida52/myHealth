@@ -60,6 +60,10 @@ fn run(
             .route("/usuarios", web::get().to(listar_usuarios))
             .route("/usuarios/{id}", web::get().to(listar_usuario))
 
+            // ROTAS DE HORÁRIOS
+            .route("/horarios", web::post().to(criar_horario))
+            .route("/horarios", web::get().to(listar_horarios_do_profissional))
+
             .app_data(db_pool.clone())
     })
     .listen(listener)?
