@@ -54,11 +54,11 @@ fn run(
     let server = HttpServer::new(move || {
         App::new()
             // ROTAS DE USUÁRIOS
-            .route("/usuarios", web::post().to(usuario))
-            .route("/usuarios/{id}", web::put().to(put_user))
-            .route("/usuarios/{id}", web::delete().to(delete_user))
-            .route("/usuarios/{id}", web::get().to(show_user))
-            .route("/usuarios", web::get().to(index_user))
+            .route("/usuarios", web::post().to(criar_usuario))
+            .route("/usuarios/{id}", web::put().to(atualizar_usuario))
+            .route("/usuarios/{id}", web::delete().to(remover_usuario))
+            .route("/usuarios", web::get().to(listar_usuarios))
+            .route("/usuarios/{id}", web::get().to(listar_usuario))
 
             .app_data(db_pool.clone())
     })

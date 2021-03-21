@@ -4,7 +4,7 @@ use myhealth::controllers::{UsuarioDB};
 use uuid::Uuid;
 
 #[actix_rt::test]
-async fn create_user_returns_a_200() {
+async fn criar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     let mut map = HashMap::new();
@@ -34,7 +34,7 @@ async fn create_user_returns_a_200() {
 }
 
 #[actix_rt::test]
-async fn update_user_returns_a_200() {
+async fn atualizar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     
@@ -67,7 +67,7 @@ async fn update_user_returns_a_200() {
 }
 
 #[actix_rt::test]
-async fn delete_user_returns_a_200() {
+async fn remover_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
 
@@ -92,7 +92,7 @@ async fn delete_user_returns_a_200() {
 }
 
 #[actix_rt::test]
-async fn show_user_returns_a_200() {
+async fn listar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     
