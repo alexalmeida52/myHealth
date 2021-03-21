@@ -147,7 +147,7 @@ pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpRes
         r#"
         SELECT id, nome, email, tipo, criado_em
         FROM usuario
-        ORDER BY id
+        ORDER BY criado_em
         "#
     )
     .fetch_all(pool.get_ref())
