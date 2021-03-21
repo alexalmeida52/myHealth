@@ -91,6 +91,28 @@ async fn remover_usuario_retorna_200() {
     assert_eq!(404, response_show_user.status().as_u16());
 }
 
+
+#[actix_rt::test]
+async fn listar_usuarios_retorna_200() {
+    let app = create_app().await;
+    let client = reqwest::Client::new();  
+    
+    let response = client
+        .get(&format!("{}/usuarios", &app.address))
+        .header("Content-Type", "application/json")
+        .send()
+        .await
+        .expect("Failed to execute request.");
+    
+    assert_eq!(200, response.status().as_u16());
+
+    let usuario_response: Vec<UsuarioDB> = response.json().await.unwrap();
+
+    assert_eq!(usuario_response.len(), 1);
+    
+
+}
+
 #[actix_rt::test]
 async fn listar_usuario_retorna_200() {
     let app = create_app().await;
