@@ -71,7 +71,7 @@ async fn remover_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
 
-    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26d";
+    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26e";
 
     let response_delete_user = client
         .delete(&format!("{}/usuarios/{}", &app.address, id))
@@ -80,6 +80,8 @@ async fn remover_usuario_retorna_200() {
         .await
         .expect("Failed to execute request.");
     
+    assert_eq!(200, response_delete_user.status().as_u16());
+
     let response_show_user = client
         .get(&format!("{}/usuarios/{}", &app.address, id))
         .header("Content-Type", "application/json")
@@ -87,7 +89,6 @@ async fn remover_usuario_retorna_200() {
         .await
         .expect("Failed to execute request.");
     
-    assert_eq!(200, response_delete_user.status().as_u16());
     assert_eq!(404, response_show_user.status().as_u16());
 }
 
@@ -108,7 +109,7 @@ async fn listar_usuarios_retorna_200() {
 
     let usuario_response: Vec<UsuarioDB> = response.json().await.unwrap();
 
-    assert_eq!(usuario_response.len(), 1);
+    assert_eq!(usuario_response.len(), 2);
     
 
 }
