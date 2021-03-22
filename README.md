@@ -50,8 +50,11 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 ### EndPoints
 #### ``Usuário``
   - [ ] [ POST ] ``/auth`` -> Autenticar usuário
-  - [x] [ POST ] ``/usuario`` -> Criar usuário paciente ou profissional
-  - [ ] [ GET ] ``/usuarios`` -> Listar usuários do tipo profissional
+  - [x] [ POST ] ``/usuarios`` -> Criar usuário paciente ou profissional
+  - [x] [ PUT ] ``/usuarios`` -> Atualizar um usuário paciente ou profissional
+  - [x] [ DELETE ] ``/usuarios`` -> Remover um usuário paciente ou profissional
+  - [x] [ GET ] ``/usuarios`` -> Listar usuários
+  - [x] [ GET ] ``/usuarios`` -> Listar um usuário
   
 #### ``Horários``
   - [ ] [ POST ] ``/horarios/grade`` -> Criar grade de horários de um profissional

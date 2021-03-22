@@ -1,5 +1,5 @@
 mod usuario;
-mod usuarios;
+mod horarios;
 
 pub use usuario::*;
-pub use usuarios::*;
+pub use horarios::*;

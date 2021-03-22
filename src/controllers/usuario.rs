@@ -43,7 +43,7 @@ pub struct Error {
  * ROTA DE CRIAR UM USUÁRIO
  * [POST] /usuarios
 */
-pub async fn usuario(
+pub async fn criar_usuario(
     usuario: Json<Usuario>,
     pool: Data<PgPool>,
 ) -> Result<HttpResponse, HttpResponse> {
@@ -79,7 +79,7 @@ pub async fn usuario(
  * ROTA DE ATUALIZAR UM USUÁRIO
  * [PUT] /usuarios/{id}
 */
-pub async fn put_user(
+pub async fn atualizar_usuario(
     usuario: Json<UsuarioUpdate>,
     req: HttpRequest,
     pool: Data<PgPool>
@@ -115,7 +115,7 @@ pub async fn put_user(
  * ROTA DE LISTAR TODOS OS USUÁRIOS
  * [DELETE] /usuarios/{id}
 */
-pub async fn delete_user(
+pub async fn remover_usuario(
     req: HttpRequest,
     pool: Data<PgPool>
 ) -> Result<HttpResponse, HttpResponse> {
@@ -142,12 +142,12 @@ pub async fn delete_user(
  * ROTA DE LISTAR TODOS OS USUÁRIOS
  * [GET] /usuarios
 */
-pub async fn index_user(pool: Data<PgPool>) -> Result<HttpResponse, HttpResponse> {
+pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpResponse> {
     let rows = sqlx::query!(
         r#"
         SELECT id, nome, email, tipo, criado_em
         FROM usuario
-        ORDER BY id
+        ORDER BY criado_em
         "#
     )
     .fetch_all(pool.get_ref())
@@ -181,7 +181,7 @@ pub async fn index_user(pool: Data<PgPool>) -> Result<HttpResponse, HttpResponse
  * ROTA DE LISTAR UM USUÁRIO
  * [GET] /usuarios/{id}
 */
-pub async fn show_user(
+pub async fn listar_usuario(
     req: HttpRequest,
     pool: web::Data<PgPool>,
 ) -> Result<HttpResponse, HttpResponse> {

@@ -4,7 +4,7 @@ use myhealth::controllers::{UsuarioDB};
 use uuid::Uuid;
 
 #[actix_rt::test]
-async fn create_user_returns_a_200() {
+async fn criar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     let mut map = HashMap::new();
@@ -34,7 +34,7 @@ async fn create_user_returns_a_200() {
 }
 
 #[actix_rt::test]
-async fn update_user_returns_a_200() {
+async fn atualizar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     
@@ -67,11 +67,11 @@ async fn update_user_returns_a_200() {
 }
 
 #[actix_rt::test]
-async fn delete_user_returns_a_200() {
+async fn remover_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
 
-    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26d";
+    let id = "3c639f2c-ab02-4c54-b751-0bfd7ff5c26e";
 
     let response_delete_user = client
         .delete(&format!("{}/usuarios/{}", &app.address, id))
@@ -80,6 +80,8 @@ async fn delete_user_returns_a_200() {
         .await
         .expect("Failed to execute request.");
     
+    assert_eq!(200, response_delete_user.status().as_u16());
+
     let response_show_user = client
         .get(&format!("{}/usuarios/{}", &app.address, id))
         .header("Content-Type", "application/json")
@@ -87,12 +89,33 @@ async fn delete_user_returns_a_200() {
         .await
         .expect("Failed to execute request.");
     
-    assert_eq!(200, response_delete_user.status().as_u16());
     assert_eq!(404, response_show_user.status().as_u16());
 }
 
+
 #[actix_rt::test]
-async fn show_user_returns_a_200() {
+async fn listar_usuarios_retorna_200() {
+    let app = create_app().await;
+    let client = reqwest::Client::new();  
+    
+    let response = client
+        .get(&format!("{}/usuarios", &app.address))
+        .header("Content-Type", "application/json")
+        .send()
+        .await
+        .expect("Failed to execute request.");
+    
+    assert_eq!(200, response.status().as_u16());
+
+    let usuario_response: Vec<UsuarioDB> = response.json().await.unwrap();
+
+    assert_eq!(usuario_response.len(), 2);
+    
+
+}
+
+#[actix_rt::test]
+async fn listar_usuario_retorna_200() {
     let app = create_app().await;
     let client = reqwest::Client::new();
     
