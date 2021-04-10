@@ -63,6 +63,8 @@ fn run(
             // ROTAS DE HORÁRIOS
             .route("/horarios", web::post().to(criar_horario))
             .route("/horarios", web::get().to(listar_horarios_do_profissional))
+            .route("/horarios/{id}", web::delete().to(remover_horario))
+            .route("/horarios-profissional/{profissional_id}", web::delete().to(remover_todos_horarios_do_profissional))
 
             // ROTAS DE AGENDAMENTOS
             .route("/agendamentos", web::post().to(criar_agendamento))
