@@ -57,15 +57,16 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
   - [x] [ GET ] ``/usuarios`` -> Listar um usuário
   
 #### ``Horários``
-  - [x] [ POST ] ``/horarios`` -> Criar grade de horários de um profissional
-  - [x] [ GET] ``/horarios`` -> Listar grades de horários de um profissional
-  - [ ] [ PUT ] ``/horarios/:id`` -> Editar uma grade de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios`` -> Remover grades de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios/:id`` -> Remover uma grade de horários de um profissional
+  - [x] [ POST ] ``/horarios`` -> Criar horários de um profissional
+  - [x] [ GET] ``/horarios`` -> Listar horários de um profissional
+  - [ ] [ PUT ] ``/horarios/:id`` -> Editar um horário de um profissional
+  - [ ] [ DELETE ] ``/horarios`` -> Remover todos os horários de um profissional
+  - [ ] [ DELETE ] ``/horarios/:id`` -> Remover um horário de um profissional
 
 #### ``Agendamentos``
-  - [ ] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
-  - [ ] [ DELETE ] ``/agendamentos/:id`` -> Remover agendamentos de um paciente/profissional
+  - [x] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
+  - [x] [ GET ] ``/agendamentos-livres`` -> Listar espaços livres para o agendamento para um profissional
+  - [x] [ DELETE ] ``/agendamentos/:id`` -> Remover agendamentos de um paciente/profissional
 
 ### Licença
 [MIT](https://choosealicense.com/licenses/mit/)
