@@ -59,7 +59,6 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 #### ``Horários``
   - [x] [ POST ] ``/horarios`` -> Criar horários de um profissional
   - [x] [ GET] ``/horarios`` -> Listar horários de um profissional
-  - [ ] [ PUT ] ``/horarios/:id`` -> Editar um horário de um profissional
   - [ ] [ DELETE ] ``/horarios`` -> Remover todos os horários de um profissional
   - [ ] [ DELETE ] ``/horarios/:id`` -> Remover um horário de um profissional
 
