@@ -168,7 +168,7 @@ pub async fn listar_disponibilidade_do_profissional(
         while data_inicio < data_fim {
             let mut esta_livre: bool = true;
             for agendamento in &rows_agendamentos {
-                println!("{} == {}", agendamento.data_inicio, data_inicio);
+                
                 if agendamento.data_inicio == data_inicio {
                     esta_livre = false;
                     break;
