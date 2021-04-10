@@ -57,11 +57,11 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
   - [x] [ GET ] ``/usuarios`` -> Listar um usuário
   
 #### ``Horários``
-  - [ ] [ POST ] ``/horarios/grade`` -> Criar grade de horários de um profissional
-  - [ ] [ GET] ``/horarios/grades`` -> Listar grades de horários de um profissional
-  - [ ] [ PUT ] ``/horarios/grade/:id`` -> Editar uma grade de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios/grades`` -> Remover grades de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios/grade/:id`` -> Remover uma grade de horários de um profissional
+  - [x] [ POST ] ``/horarios`` -> Criar grade de horários de um profissional
+  - [x] [ GET] ``/horarios`` -> Listar grades de horários de um profissional
+  - [ ] [ PUT ] ``/horarios/:id`` -> Editar uma grade de horários de um profissional
+  - [ ] [ DELETE ] ``/horarios`` -> Remover grades de horários de um profissional
+  - [ ] [ DELETE ] ``/horarios/:id`` -> Remover uma grade de horários de um profissional
 
 #### ``Agendamentos``
   - [ ] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
