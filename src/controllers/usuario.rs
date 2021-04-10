@@ -112,7 +112,7 @@ pub async fn atualizar_usuario(
 }
 
 /**
- * ROTA DE LISTAR TODOS OS USUÁRIOS
+ * ROTA DE DELETAR UM USUÁRIO
  * [DELETE] /usuarios/{id}
 */
 pub async fn remover_usuario(

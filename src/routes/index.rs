@@ -64,6 +64,11 @@ fn run(
             .route("/horarios", web::post().to(criar_horario))
             .route("/horarios", web::get().to(listar_horarios_do_profissional))
 
+            // ROTAS DE AGENDAMENTOS
+            .route("/agendamentos", web::post().to(criar_agendamento))
+            .route("/agendamentos/{id}", web::delete().to(remover_agendamento))
+            .route("/agendamentos", web::get().to(listar_disponibilidade_do_profissional))
+
             .app_data(db_pool.clone())
     })
     .listen(listener)?
