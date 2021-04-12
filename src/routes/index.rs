@@ -7,6 +7,7 @@ use crate::controllers::*;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::PgPool;
 use std::net::TcpListener;
+use tracing_actix_web::TracingLogger;
 
 pub struct Application {
     port: u16,
@@ -53,6 +54,7 @@ fn run(
 
     let server = HttpServer::new(move || {
         App::new()
+            .wrap(TracingLogger)
             // ROTAS DE USUÁRIOS
             .route("/usuarios", web::post().to(criar_usuario))
             .route("/usuarios/{id}", web::put().to(atualizar_usuario))

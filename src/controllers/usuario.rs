@@ -43,6 +43,7 @@ pub struct Error {
  * ROTA DE CRIAR UM USUÁRIO
  * [POST] /usuarios
 */
+#[tracing::instrument(name = "Criar Usuário", skip(usuario, pool))]
 pub async fn criar_usuario(
     usuario: Json<Usuario>,
     pool: Data<PgPool>,
@@ -79,6 +80,7 @@ pub async fn criar_usuario(
  * ROTA DE ATUALIZAR UM USUÁRIO
  * [PUT] /usuarios/{id}
 */
+#[tracing::instrument(name = "Atualizar Usuário", skip(usuario, pool))]
 pub async fn atualizar_usuario(
     usuario: Json<UsuarioUpdate>,
     req: HttpRequest,
@@ -115,6 +117,7 @@ pub async fn atualizar_usuario(
  * ROTA DE DELETAR UM USUÁRIO
  * [DELETE] /usuarios/{id}
 */
+#[tracing::instrument(name = "Remover Usuário", skip(req, pool))]
 pub async fn remover_usuario(
     req: HttpRequest,
     pool: Data<PgPool>
@@ -142,6 +145,7 @@ pub async fn remover_usuario(
  * ROTA DE LISTAR TODOS OS USUÁRIOS
  * [GET] /usuarios
 */
+#[tracing::instrument(name = "Listar Usuários", skip(pool))]
 pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpResponse> {
     let rows = sqlx::query!(
         r#"
@@ -181,6 +185,7 @@ pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpRes
  * ROTA DE LISTAR UM USUÁRIO
  * [GET] /usuarios/{id}
 */
+#[tracing::instrument(name = "Listar Usuário", skip(req, pool))]
 pub async fn listar_usuario(
     req: HttpRequest,
     pool: web::Data<PgPool>,
@@ -191,7 +196,7 @@ pub async fn listar_usuario(
         .fetch_one(pool.get_ref())
         .await
         .map_err(|e| {
-            eprintln!("Falhou to execute query: {}", e);
+            tracing::error!("Failed to execute query: {:?}", e);
             let erro = Error {
                 message: e.to_string(),
             };
