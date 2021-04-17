@@ -14,4 +14,4 @@ CREATE TABLE horarios(
 );
 
 INSERT INTO horarios (id, data_inicio, data_fim, duracao_consulta, usuario_id, criado_em)
-VALUES('3c639f2c-ab02-4c54-b751-0bfd7ff5c26d', '2021-03-04 06:00:00.468617+00', '2021-03-05 12:00:28.468617+00', 30, '3c639f2c-ab02-4c54-b751-0bfd7ff5c26d', '2021-03-21 16:00:00.468617+00');
+VALUES('3c639f2c-ab02-4c54-b751-0bfd7ff5c26d', '2021-03-04 06:00:00.468617+00', '2021-03-04 12:00:00.468617+00', 60, '3c639f2c-ab02-4c54-b751-0bfd7ff5c26d', '2021-03-21 16:00:00.468617+00');
