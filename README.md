@@ -49,23 +49,22 @@ Este é um software para a área da saúde, que permite pacientes marcarem consu
 
 ### EndPoints
 #### ``Usuário``
-  - [ ] [ POST ] ``/auth`` -> Autenticar usuário
   - [x] [ POST ] ``/usuarios`` -> Criar usuário paciente ou profissional
-  - [x] [ PUT ] ``/usuarios`` -> Atualizar um usuário paciente ou profissional
-  - [x] [ DELETE ] ``/usuarios`` -> Remover um usuário paciente ou profissional
   - [x] [ GET ] ``/usuarios`` -> Listar usuários
   - [x] [ GET ] ``/usuarios`` -> Listar um usuário
+  - [x] [ PUT ] ``/usuarios`` -> Atualizar um usuário paciente ou profissional
+  - [x] [ DELETE ] ``/usuarios`` -> Remover um usuário paciente ou profissional
   
 #### ``Horários``
-  - [ ] [ POST ] ``/horarios/grade`` -> Criar grade de horários de um profissional
-  - [ ] [ GET] ``/horarios/grades`` -> Listar grades de horários de um profissional
-  - [ ] [ PUT ] ``/horarios/grade/:id`` -> Editar uma grade de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios/grades`` -> Remover grades de horários de um profissional
-  - [ ] [ DELETE ] ``/horarios/grade/:id`` -> Remover uma grade de horários de um profissional
+  - [x] [ POST ] ``/horarios`` -> Criar horários de um profissional
+  - [x] [ GET] ``/horarios`` -> Listar horários de um profissional
+  - [x] [ DELETE ] ``/horarios`` -> Remover todos os horários de um profissional
+  - [x] [ DELETE ] ``/horarios/:id`` -> Remover um horário de um profissional
 
 #### ``Agendamentos``
-  - [ ] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
-  - [ ] [ DELETE ] ``/agendamentos/:id`` -> Remover agendamentos de um paciente/profissional
+  - [x] [ POST ] ``/agendamento`` -> Criar agendamentos de um paciente para um profissional
+  - [x] [ GET ] ``/agendamentos-livres`` -> Listar espaços livres para o agendamento para um profissional
+  - [x] [ DELETE ] ``/agendamentos/:id`` -> Remover agendamentos de um paciente/profissional
 
 ### Licença
 [MIT](https://choosealicense.com/licenses/mit/)

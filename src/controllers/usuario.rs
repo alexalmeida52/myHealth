@@ -43,6 +43,7 @@ pub struct Error {
  * ROTA DE CRIAR UM USUÁRIO
  * [POST] /usuarios
 */
+#[tracing::instrument(name = "Criar Usuário", skip(usuario, pool))]
 pub async fn criar_usuario(
     usuario: Json<Usuario>,
     pool: Data<PgPool>,
@@ -76,72 +77,10 @@ pub async fn criar_usuario(
 }
 
 /**
- * ROTA DE ATUALIZAR UM USUÁRIO
- * [PUT] /usuarios/{id}
-*/
-pub async fn atualizar_usuario(
-    usuario: Json<UsuarioUpdate>,
-    req: HttpRequest,
-    pool: Data<PgPool>
-) -> Result<HttpResponse, HttpResponse> {
-    let id = get_param(req, "id");
-    
-    sqlx::query!(
-        r#"
-        UPDATE usuario
-        SET nome = $1, email = $2, tipo = $3
-        WHERE id = $4
-        "#,
-        usuario.nome,
-        usuario.email,
-        usuario.tipo,
-        id
-    )
-    .execute(pool.get_ref())
-    .await
-    .map_err(|e| {
-        eprintln!("Failed to execute query: {}", e);
-        let erro = Error {
-            message: e.to_string(),
-        };
-
-        HttpResponse::BadRequest().json(&erro)
-    })?;
-
-    Ok(HttpResponse::Ok().json("Atualizado com sucesso!"))
-}
-
-/**
- * ROTA DE LISTAR TODOS OS USUÁRIOS
- * [DELETE] /usuarios/{id}
-*/
-pub async fn remover_usuario(
-    req: HttpRequest,
-    pool: Data<PgPool>
-) -> Result<HttpResponse, HttpResponse> {
-    let id = get_param(req, "id");
-
-    sqlx::query!(
-        r#"
-        DELETE FROM usuario
-        WHERE id = $1
-        "#,
-        id
-    )
-    .execute(pool.get_ref())
-    .await
-    .map_err(|e| {
-        eprintln!("Failed to execute query: {}", e);
-        HttpResponse::InternalServerError().finish()
-    })?;
-
-    Ok(HttpResponse::Ok().json("Removido com sucesso!"))
-}
-
-/**
  * ROTA DE LISTAR TODOS OS USUÁRIOS
  * [GET] /usuarios
 */
+#[tracing::instrument(name = "Listar Usuários", skip(pool))]
 pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpResponse> {
     let rows = sqlx::query!(
         r#"
@@ -181,6 +120,7 @@ pub async fn listar_usuarios(pool: Data<PgPool>) -> Result<HttpResponse, HttpRes
  * ROTA DE LISTAR UM USUÁRIO
  * [GET] /usuarios/{id}
 */
+#[tracing::instrument(name = "Listar Usuário", skip(req, pool))]
 pub async fn listar_usuario(
     req: HttpRequest,
     pool: web::Data<PgPool>,
@@ -191,7 +131,7 @@ pub async fn listar_usuario(
         .fetch_one(pool.get_ref())
         .await
         .map_err(|e| {
-            eprintln!("Falhou to execute query: {}", e);
+            tracing::error!("Failed to execute query: {:?}", e);
             let erro = Error {
                 message: e.to_string(),
             };
@@ -208,6 +148,71 @@ pub async fn listar_usuario(
     };
 
     Ok(HttpResponse::Ok().json(&response))
+}
+
+/**
+ * ROTA DE ATUALIZAR UM USUÁRIO
+ * [PUT] /usuarios/{id}
+*/
+#[tracing::instrument(name = "Atualizar Usuário", skip(usuario, pool))]
+pub async fn atualizar_usuario(
+    usuario: Json<UsuarioUpdate>,
+    req: HttpRequest,
+    pool: Data<PgPool>
+) -> Result<HttpResponse, HttpResponse> {
+    let id = get_param(req, "id");
+    
+    sqlx::query!(
+        r#"
+        UPDATE usuario
+        SET nome = $1, email = $2, tipo = $3
+        WHERE id = $4
+        "#,
+        usuario.nome,
+        usuario.email,
+        usuario.tipo,
+        id
+    )
+    .execute(pool.get_ref())
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to execute query: {}", e);
+        let erro = Error {
+            message: e.to_string(),
+        };
+
+        HttpResponse::BadRequest().json(&erro)
+    })?;
+
+    Ok(HttpResponse::Ok().json("Atualizado com sucesso!"))
+}
+
+/**
+ * ROTA DE DELETAR UM USUÁRIO
+ * [DELETE] /usuarios/{id}
+*/
+#[tracing::instrument(name = "Remover Usuário", skip(req, pool))]
+pub async fn remover_usuario(
+    req: HttpRequest,
+    pool: Data<PgPool>
+) -> Result<HttpResponse, HttpResponse> {
+    let id = get_param(req, "id");
+
+    sqlx::query!(
+        r#"
+        DELETE FROM usuario
+        WHERE id = $1
+        "#,
+        id
+    )
+    .execute(pool.get_ref())
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to execute query: {}", e);
+        HttpResponse::InternalServerError().finish()
+    })?;
+
+    Ok(HttpResponse::Ok().json("Removido com sucesso!"))
 }
 
 fn get_param(req: HttpRequest, parameter: &str) -> Uuid {

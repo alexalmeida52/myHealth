@@ -1,28 +1,28 @@
-use actix_web::{web, HttpResponse};
+use actix_web::{web, HttpResponse, HttpRequest};
 use chrono::{Utc, DateTime};
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use uuid::Uuid;
 use web::{Data, Json};
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Horario {
-    data_inicio: String,
-    data_fim: String,
-    usuario_id: String,
-    dia_da_semana: Option<i32>,
-    duracao_consulta: i32,
+    pub data_inicio: String,
+    pub data_fim: String,
+    pub usuario_id: String,
+    pub dia_da_semana: Option<i32>,
+    pub duracao_consulta: i32,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct HorarioDB {
-    id: Uuid,
-    data_inicio: DateTime<Utc>,
-    data_fim: DateTime<Utc>,
-    usuario_id: Uuid,
-    dia_da_semana: Option<i32>,
-    duracao_consulta: i32,
-    criado_em: DateTime<Utc>
+    pub id: Uuid,
+    pub data_inicio: DateTime<Utc>,
+    pub data_fim: DateTime<Utc>,
+    pub usuario_id: Uuid,
+    pub dia_da_semana: Option<i32>,
+    pub duracao_consulta: i32,
+    pub criado_em: DateTime<Utc>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -79,7 +79,6 @@ pub async fn criar_horario(
     Ok(HttpResponse::Ok().json(&response))
 }
 
-
 /**
  * ROTA DE LISTAR TODOS OS HORÁRIOS DE UM USUÁRIO PROFISSIONAL
  * [GET] /horarios/{usuario_id}
@@ -104,4 +103,63 @@ pub async fn listar_horarios_do_profissional(
         })?;
    
     Ok(HttpResponse::Ok().json(rows))
+}
+
+
+/**
+ * ROTA DE DELETAR UM HORÁRIO
+ * [DELETE] /horarios/{id}
+*/
+pub async fn remover_horario(
+    req: HttpRequest,
+    pool: Data<PgPool>
+) -> Result<HttpResponse, HttpResponse> {
+    let id = get_param(req, "id");
+
+    sqlx::query!(
+        r#"
+        DELETE FROM horarios
+        WHERE id = $1
+        "#,
+        id
+    )
+    .execute(pool.get_ref())
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to execute query: {}", e);
+        HttpResponse::BadRequest().json(e.to_string())
+    })?;
+
+    Ok(HttpResponse::Ok().json("Horário removido com sucesso!"))
+}
+
+/**
+ * ROTA DE DELETAR TODOS HORÁRIOS
+ * [DELETE] /horarios/{id}
+*/
+pub async fn remover_todos_horarios_do_profissional(
+    req: HttpRequest,
+    pool: Data<PgPool>
+) -> Result<HttpResponse, HttpResponse> {
+    let profissional_id = get_param(req, "profissional_id");
+
+    sqlx::query!(
+        r#"
+        DELETE FROM horarios
+        WHERE usuario_id = $1
+        "#,
+        profissional_id
+    )
+    .execute(pool.get_ref())
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to execute query: {}", e);
+        HttpResponse::BadRequest().json(e.to_string())
+    })?;
+
+    Ok(HttpResponse::Ok().json("Todos os horários removidos com sucesso!"))
+}
+
+fn get_param(req: HttpRequest, parameter: &str) -> Uuid {
+    req.match_info().get(parameter).unwrap().parse().unwrap()
 }
