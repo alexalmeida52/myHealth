@@ -7,10 +7,10 @@ use web::{Data, Json};
 
 #[derive(Serialize, Deserialize)]
 pub struct ReqBodyPost {
-    data_inicio: String,
-    horario_id: String,
-    paciente_id: String,
-    profissional_id: String,
+    pub data_inicio: String,
+    pub horario_id: String,
+    pub paciente_id: String,
+    pub profissional_id: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -20,12 +20,12 @@ pub struct Error {
 
 #[derive(Serialize, Deserialize)]
 pub struct AgendamentoDB {
-    id: Uuid,
-    data_inicio: DateTime<Utc>,
-    horario_id: Uuid,
-    paciente_id: Uuid,
-    profissional_id: Uuid,
-    criado_em: DateTime<Utc>
+    pub id: Uuid,
+    pub data_inicio: DateTime<Utc>,
+    pub horario_id: Uuid,
+    pub paciente_id: Uuid,
+    pub profissional_id: Uuid,
+    pub criado_em: DateTime<Utc>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -36,14 +36,14 @@ pub struct QueryParamsAgendamento {
 
 #[derive(Serialize, Deserialize)]
 pub struct HorariosLivresDB {
-    data_inicio: DateTime<Utc>,
-    data_fim: DateTime<Utc>,
-    duracao_consulta: i32,
-    horario_id: Uuid
+    pub data_inicio: DateTime<Utc>,
+    pub data_fim: DateTime<Utc>,
+    pub duracao_consulta: i32,
+    pub horario_id: Uuid
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct HorarioDB {
+struct HorarioDB {
     id: Uuid,
     data_inicio: DateTime<Utc>,
     data_fim: DateTime<Utc>,
@@ -95,34 +95,6 @@ pub async fn criar_agendamento(
     Ok(HttpResponse::Ok().json(&{
         id
     }))
-}
-
-
-/**
- * ROTA DE DELETAR UM AGENDAMENTO
- * [DELETE] /agendamentos/{id}
-*/
-pub async fn remover_agendamento(
-    req: HttpRequest,
-    pool: Data<PgPool>
-) -> Result<HttpResponse, HttpResponse> {
-    let id = get_param(req, "id");
-
-    sqlx::query!(
-        r#"
-        DELETE FROM agendamentos
-        WHERE id = $1
-        "#,
-        id
-    )
-    .execute(pool.get_ref())
-    .await
-    .map_err(|e| {
-        eprintln!("Failed to execute query: {}", e);
-        HttpResponse::InternalServerError().finish()
-    })?;
-
-    Ok(HttpResponse::Ok().json("Removido com sucesso!"))
 }
 
 /**
@@ -187,6 +159,33 @@ pub async fn listar_disponibilidade_do_profissional(
         }
     }
     Ok(HttpResponse::Ok().json(horarios_livres))
+}
+
+/**
+ * ROTA DE DELETAR UM AGENDAMENTO
+ * [DELETE] /agendamentos/{id}
+*/
+pub async fn remover_agendamento(
+    req: HttpRequest,
+    pool: Data<PgPool>
+) -> Result<HttpResponse, HttpResponse> {
+    let id = get_param(req, "id");
+
+    sqlx::query!(
+        r#"
+        DELETE FROM agendamentos
+        WHERE id = $1
+        "#,
+        id
+    )
+    .execute(pool.get_ref())
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to execute query: {}", e);
+        HttpResponse::InternalServerError().finish()
+    })?;
+
+    Ok(HttpResponse::Ok().json("Removido com sucesso!"))
 }
 
 fn get_param(req: HttpRequest, parameter: &str) -> Uuid {

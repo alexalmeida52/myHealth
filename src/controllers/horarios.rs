@@ -5,24 +5,24 @@ use sqlx::PgPool;
 use uuid::Uuid;
 use web::{Data, Json};
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Horario {
-    data_inicio: String,
-    data_fim: String,
-    usuario_id: String,
-    dia_da_semana: Option<i32>,
-    duracao_consulta: i32,
+    pub data_inicio: String,
+    pub data_fim: String,
+    pub usuario_id: String,
+    pub dia_da_semana: Option<i32>,
+    pub duracao_consulta: i32,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct HorarioDB {
-    id: Uuid,
-    data_inicio: DateTime<Utc>,
-    data_fim: DateTime<Utc>,
-    usuario_id: Uuid,
-    dia_da_semana: Option<i32>,
-    duracao_consulta: i32,
-    criado_em: DateTime<Utc>
+    pub id: Uuid,
+    pub data_inicio: DateTime<Utc>,
+    pub data_fim: DateTime<Utc>,
+    pub usuario_id: Uuid,
+    pub dia_da_semana: Option<i32>,
+    pub duracao_consulta: i32,
+    pub criado_em: DateTime<Utc>
 }
 
 #[derive(Serialize, Deserialize)]
@@ -79,6 +79,32 @@ pub async fn criar_horario(
     Ok(HttpResponse::Ok().json(&response))
 }
 
+/**
+ * ROTA DE LISTAR TODOS OS HORÁRIOS DE UM USUÁRIO PROFISSIONAL
+ * [GET] /horarios/{usuario_id}
+*/
+pub async fn listar_horarios_do_profissional(
+    req_query: web::Query<HorarioUsuarioId>,
+    pool: web::Data<PgPool>,
+) -> Result<HttpResponse, HttpResponse> {
+    
+    let usuario_id: Uuid = Uuid::parse_str(&req_query.usuario_id).unwrap();
+    
+    let rows = sqlx::query_as!(HorarioDB,"SELECT * FROM horarios WHERE usuario_id = $1", usuario_id)
+        .fetch_all(pool.get_ref())
+        .await
+        .map_err(|e| {
+            eprintln!("Falhou to execute query: {}", e);
+            let erro = Error {
+                message: e.to_string(),
+            };
+    
+            HttpResponse::NotFound().json(&erro)
+        })?;
+   
+    Ok(HttpResponse::Ok().json(rows))
+}
+
 
 /**
  * ROTA DE DELETAR UM HORÁRIO
@@ -132,32 +158,6 @@ pub async fn remover_todos_horarios_do_profissional(
     })?;
 
     Ok(HttpResponse::Ok().json("Todos os horários removidos com sucesso!"))
-}
-
-/**
- * ROTA DE LISTAR TODOS OS HORÁRIOS DE UM USUÁRIO PROFISSIONAL
- * [GET] /horarios/{usuario_id}
-*/
-pub async fn listar_horarios_do_profissional(
-    req_query: web::Query<HorarioUsuarioId>,
-    pool: web::Data<PgPool>,
-) -> Result<HttpResponse, HttpResponse> {
-    
-    let usuario_id: Uuid = Uuid::parse_str(&req_query.usuario_id).unwrap();
-    
-    let rows = sqlx::query_as!(HorarioDB,"SELECT * FROM horarios WHERE usuario_id = $1", usuario_id)
-        .fetch_all(pool.get_ref())
-        .await
-        .map_err(|e| {
-            eprintln!("Falhou to execute query: {}", e);
-            let erro = Error {
-                message: e.to_string(),
-            };
-    
-            HttpResponse::NotFound().json(&erro)
-        })?;
-   
-    Ok(HttpResponse::Ok().json(rows))
 }
 
 fn get_param(req: HttpRequest, parameter: &str) -> Uuid {

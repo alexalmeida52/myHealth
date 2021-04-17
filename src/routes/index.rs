@@ -57,10 +57,10 @@ fn run(
             .wrap(TracingLogger)
             // ROTAS DE USUÁRIOS
             .route("/usuarios", web::post().to(criar_usuario))
-            .route("/usuarios/{id}", web::put().to(atualizar_usuario))
-            .route("/usuarios/{id}", web::delete().to(remover_usuario))
             .route("/usuarios", web::get().to(listar_usuarios))
             .route("/usuarios/{id}", web::get().to(listar_usuario))
+            .route("/usuarios/{id}", web::put().to(atualizar_usuario))
+            .route("/usuarios/{id}", web::delete().to(remover_usuario))
 
             // ROTAS DE HORÁRIOS
             .route("/horarios", web::post().to(criar_horario))
@@ -70,8 +70,8 @@ fn run(
 
             // ROTAS DE AGENDAMENTOS
             .route("/agendamentos", web::post().to(criar_agendamento))
-            .route("/agendamentos/{id}", web::delete().to(remover_agendamento))
             .route("/agendamentos-livres", web::get().to(listar_disponibilidade_do_profissional))
+            .route("/agendamentos/{id}", web::delete().to(remover_agendamento))
 
             .app_data(db_pool.clone())
     })
