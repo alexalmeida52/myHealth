@@ -18,7 +18,7 @@ actix-rt = "2.0.2"
 serde = "1.0.124"
 serde-aux = "1.0.1"
 config = { version = "0.10.1", default-features = false, features = ["yaml"] }
-sqlx = { version = "0.5.1", default-features = false, features = [ "runtime-actix-rustls", "macros", "postgres", "uuid", "chrono", "migrate", "json", "offline"]  }
+sqlx = { version = "0.5.2", default-features = false, features = [ "runtime-actix-rustls", "macros", "postgres", "uuid", "chrono", "migrate", "json", "offline"]  }
 async-std = { version = "1.6", features = [ "attributes" ] }
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 chrono = { version = "0.4", features = ["serde"] }
