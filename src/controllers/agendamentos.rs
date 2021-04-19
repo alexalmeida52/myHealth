@@ -57,6 +57,7 @@ struct HorarioDB {
  * ROTA DE CRIAR AGENDAMENTO
  * [POST] /agendamentos
 */
+#[tracing::instrument(name = "Criar agendamento", skip(agendamento, pool))]
 pub async fn criar_agendamento(
     agendamento: Json<ReqBodyPost>,
     pool: Data<PgPool>
@@ -101,6 +102,7 @@ pub async fn criar_agendamento(
  * ROTA DE LISTAR A DISPONIBILIDADE DE UM USUÁRIO PROFISSIONAL
  * [GET] /agendamentos/{usuario_id}
 */
+#[tracing::instrument(name = "Listar disponibilidade", skip(req_query, pool))]
 pub async fn listar_disponibilidade_do_profissional(
     req_query: web::Query<QueryParamsAgendamento>,
     pool: web::Data<PgPool>,
@@ -165,6 +167,7 @@ pub async fn listar_disponibilidade_do_profissional(
  * ROTA DE DELETAR UM AGENDAMENTO
  * [DELETE] /agendamentos/{id}
 */
+#[tracing::instrument(name = "Remover Agendamento", skip(req, pool))]
 pub async fn remover_agendamento(
     req: HttpRequest,
     pool: Data<PgPool>
